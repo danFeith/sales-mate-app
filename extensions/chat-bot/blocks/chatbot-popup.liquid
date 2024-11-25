@@ -1,0 +1,31 @@
+<div id="chatbot-root"></div>
+<script src="{{ 'chatbot.js' | asset_url }}"></script>
+
+<link href="{{ 'main.css' | asset_url }}" rel="stylesheet">
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const root = document.getElementById('chatbot-root');
+    if (root) {
+      ReactDOM.createRoot(root).render(
+        React.createElement(Chatbot)
+      );
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Chatbot Popup",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "chatbot_greeting",
+      "label": "Greeting Message",
+      "default": "Hi there! How can I help you?"
+    }
+  ]
+}
+{% endschema %}

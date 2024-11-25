@@ -1,0 +1,64 @@
+# Node.js modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*.local
+
+# Dependency directories
+/node_modules/
+/jspm_packages/
+/dist/
+/build/
+
+# OS specific files (macOS)
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Optional npm cache
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional babel cache
+.babelrc
+.babelrc.js
+babel.config.js
+babel.config.json
+
+# Output of npm pack
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Yarn offline cache
+.yarn/cache/
+
+# Yarn/PNPM manifest files
+.pnp.js
+.pnp.cjs
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.swp
+*.tmp
+.cache/
+.next/
+out/

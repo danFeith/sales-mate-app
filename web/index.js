@@ -3,10 +3,14 @@ import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
-
 import shopify from "./shopify.js";
-import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
+import {fetchAllProducts} from "./products/fetchAllProducts.js";
+import { initShop } from "./shops/initShop.js";
+import connectDB from "./db/connect.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "8000",
@@ -19,12 +23,19 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+connectDB()
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
+  async (req, res, next) => {
+    console.log("asdjgaslkjdg")
+    const { accessToken, shop } = res.locals.shopify.session;
+    await initShop(shop, accessToken)
+    next()
+  },
   shopify.redirectToShopifyOrAppRoot()
 );
 app.post(
@@ -39,34 +50,17 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
-app.get("/api/products/count", async (_req, res) => {
-  const client = new shopify.api.clients.Graphql({
-    session: res.locals.shopify.session,
-  });
-
-  const countData = await client.request(`
-    query shopifyProductCount {
-      productsCount {
-        count
-      }
-    }
-  `);
-
-  res.status(200).send({ count: countData.data.productsCount.count });
-});
-
-app.post("/api/products", async (_req, res) => {
-  let status = 200;
-  let error = null;
+app.get("/api/products/all-rest", async (_req, res) => {
+  const { accessToken, shop } = res.locals.shopify.session;
 
   try {
-    await productCreator(res.locals.shopify.session);
-  } catch (e) {
-    console.log(`Failed to process products/create: ${e.message}`);
-    status = 500;
-    error = e.message;
+    const products = await fetchAllProducts(shop, accessToken);
+    console.log("All Products:", products);
+    res.status(200).send({ products });
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    res.status(500).send({ error: error.message });
   }
-  res.status(status).send({ success: status === 200, error });
 });
 
 app.use(shopify.cspHeaders());

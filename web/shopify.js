@@ -30,21 +30,6 @@ const shopify = shopifyApp({
   auth: {
     path: "/api/auth",
     callbackPath: "/api/auth/callback",
-    afterAuth: async ({ session, req, res }) => {
-      console.log(`App successfully installed on shop: ${session.shop}`);
-
-      // Trigger fetching products
-      try {
-        const products = await fetchAllProducts(session.shop, session.accessToken);
-        console.log(`Fetched ${products.length} products during installation.`);
-      } catch (error) {
-        console.error("Error fetching products after app installation:", error);
-      }
-
-      // Redirect the user to the app's root page
-      res.redirect(`/?shop=${session.shop}`);
-    },
-    
   },
   webhooks: {
     path: "/api/webhooks",

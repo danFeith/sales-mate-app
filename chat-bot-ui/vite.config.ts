@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: '../assets', // Output to Shopify's assets folder
+    outDir: '../extensions/chat-bot/assets', // Output to Shopify's assets folder
     rollupOptions: {
       input: './src/main.tsx', // Main entry point for your React app
       output: {

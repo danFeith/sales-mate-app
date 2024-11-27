@@ -4,8 +4,8 @@ import { readFileSync } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
 import shopify from "./shopify.js";
-import PrivacyWebhookHandlers from "./privacy.js";
-import {fetchAllProducts} from "./products/fetchAllProducts.js";
+import { customerWebhooksHandlers } from "./privacy.js";
+import { fetchAllProducts } from "./products/fetchAllProducts.js";
 import { initShop } from "./shops/initShop.js";
 import connectDB from "./db/connect.js";
 import dotenv from "dotenv";
@@ -31,7 +31,6 @@ app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
   async (req, res, next) => {
-    console.log("asdjgaslkjdg")
     const { accessToken, shop } = res.locals.shopify.session;
     await initShop(shop, accessToken)
     next()
@@ -40,7 +39,7 @@ app.get(
 );
 app.post(
   shopify.config.webhooks.path,
-  shopify.processWebhooks({ webhookHandlers: PrivacyWebhookHandlers })
+  shopify.processWebhooks({ webhookHandlers: customerWebhooksHandlers })
 );
 
 // If you are adding routes outside of the /api path, remember to

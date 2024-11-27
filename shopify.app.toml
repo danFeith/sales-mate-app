@@ -3,7 +3,7 @@
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
 name = "SalesMateApp"
 handle = "salesmateapp"
-application_url = "https://rpm-answering-oo-experiencing.trycloudflare.com"
+application_url = "https://spanking-contacts-rides-christina.trycloudflare.com"
 embedded = true
 
 [build]
@@ -13,17 +13,21 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_products,write_products"
 
 [auth]
 redirect_urls = [
-  "https://rpm-answering-oo-experiencing.trycloudflare.com/auth/callback",
-  "https://rpm-answering-oo-experiencing.trycloudflare.com/auth/shopify/callback",
-  "https://rpm-answering-oo-experiencing.trycloudflare.com/api/auth/callback"
+  "https://spanking-contacts-rides-christina.trycloudflare.com/auth/callback",
+  "https://spanking-contacts-rides-christina.trycloudflare.com/auth/shopify/callback",
+  "https://spanking-contacts-rides-christina.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "orders/create" ]
+  uri = "pubsub://<PROJECT-ID>:<PUBSUB-TOPIC-ID>"
 
 [pos]
 embedded = false

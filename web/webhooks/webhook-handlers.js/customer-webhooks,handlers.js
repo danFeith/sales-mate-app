@@ -4,6 +4,7 @@ import { DeliveryMethod } from "@shopify/shopify-api";
  * @type {{[key: string]: import("@shopify/shopify-api").WebhookHandler}}
  */
 export const customerWebhooksHandlers = {
+
   /**
    * Customers can request their data from a store owner. When this happens,
    * Shopify invokes this privacy webhook.

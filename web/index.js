@@ -4,11 +4,14 @@ import { readFileSync } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
 import shopify from "./shopify.js";
-import { customerWebhooksHandlers } from "./privacy.js";
-import { fetchAllProducts } from "./products/fetchAllProducts.js";
-import { initShop } from "./shops/initShop.js";
+import { fetchAllProducts } from "./products/fetch-all-products.js";
+import { initShop } from "./shops/init-shop.js";
 import connectDB from "./db/connect.js";
 import dotenv from "dotenv";
+import { registerWebhooksForAllShops } from "./webhooks/register-webhooks.js";
+import { customerWebhooksHandlers } from "./webhooks/webhook-handlers.js/customer-webhooks,handlers.js";
+import { productsWebhooksHandlers } from "./webhooks/webhook-handlers.js/products-webhooks-handlers.js";
+import { onInstall } from "./middlewares/on-install-middlware.js";
 
 dotenv.config();
 
@@ -23,24 +26,20 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
-connectDB()
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
-  async (req, res, next) => {
-    const { accessToken, shop } = res.locals.shopify.session;
-    await initShop(shop, accessToken)
-    next()
-  },
+  onInstall,
   shopify.redirectToShopifyOrAppRoot()
 );
 app.post(
   shopify.config.webhooks.path,
-  shopify.processWebhooks({ webhookHandlers: customerWebhooksHandlers })
+  shopify.processWebhooks({ webhookHandlers: { ...customerWebhooksHandlers, ...productsWebhooksHandlers } })
 );
+
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
@@ -54,7 +53,6 @@ app.get("/api/products/all-rest", async (_req, res) => {
 
   try {
     const products = await fetchAllProducts(shop, accessToken);
-    console.log("All Products:", products);
     res.status(200).send({ products });
   } catch (error) {
     console.error("Error fetching products:", error.message);
@@ -76,4 +74,12 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     );
 });
 
-app.listen(PORT);
+
+const startServer = async () => {
+  await connectDB()
+  await registerWebhooksForAllShops()
+  app.listen(PORT);
+}
+
+await startServer()
+

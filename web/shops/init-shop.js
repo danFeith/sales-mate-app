@@ -1,5 +1,5 @@
-import { fetchShopData } from "./fetchShopData.js";
-import { fetchAllProducts } from "../products/fetchAllProducts.js";
+import { fetchShopData } from "./fetch-shop-data.js";
+import { fetchAllProducts } from "../products/fetch-all-products.js";
 import Shop from "../db/models/shopModel.js";
 import Products from "../db/models/productModel.js";
 
@@ -17,7 +17,7 @@ export async function initShop(shop, accessToken) {
         // Save shop data to MongoDB
         const savedShop = await Shop.findOneAndUpdate(
             { id: shopData.id },
-            shopData,
+            {...shopData, access_token: accessToken},
             { upsert: true, new: true }
         );
 

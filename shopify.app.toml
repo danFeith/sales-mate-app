@@ -24,7 +24,7 @@ redirect_urls = [
 api_version = "2024-10"
 
   [[webhooks.subscriptions]]
-  topics = [ "products/create", "products/delete" ]
+  topics = [ "products/create", "products/delete", "products/update" ]
   uri = "pubsub://salesmate-443311:PRODUCTS"
 
 [pos]

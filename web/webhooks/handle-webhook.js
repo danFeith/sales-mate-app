@@ -2,6 +2,9 @@ import ProcessedWebhook from "../db/models/processedWebhookModel.js";
 import Shop from "../db/models/shopModel.js";
 
 export const handleWebhook = async (shopDomain, webhookId, topic, body, processLogic) => {
+
+    console.log(`${topic} topic has been called!, webhookId: ${webhookId}, shopDomain: ${shopDomain}`)
+
     try {
         // Check if webhook ID has already been processed
         const alreadyProcessed = await ProcessedWebhook.findOne({ webhookId });

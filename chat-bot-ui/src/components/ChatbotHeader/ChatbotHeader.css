@@ -1,0 +1,63 @@
+/* Header Section */
+.chatbot-modal-header {
+    height: 70px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px;
+    background-color: #1f2937; /* Dark gray background */
+    color: white;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .chatbot-back-button,
+  .chatbot-options-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Center alignment for title and status */
+  .chatbot-header-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  
+  /* Green status dot */
+  .chatbot-status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+  }
+  
+  /* Title styling */
+  .chatbot-header-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Logo Section */
+  .chatbot-logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -32px; /* Overlap with the header */
+  }
+  
+  .chatbot-logo {
+    width: 80px;
+    height: 80px;
+    background-color: #3b82f6; /* Blue circular background */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

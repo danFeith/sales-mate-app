@@ -9,6 +9,7 @@ declare global {
     React: typeof React;
     ReactDOM: typeof ReactDOM;
     Chatbot: React.FC;
+    shopDomain: string;
   }
 }
 

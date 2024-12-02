@@ -3,7 +3,7 @@
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
 name = "SalesMateApp"
 handle = "salesmateapp"
-application_url = "https://sales-mate-app.onrender.com"
+application_url = "https://killing-documentary-decided-dp.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,14 +17,16 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://sales-mate-app.onrender.com/api/auth/callback"
+  "https://killing-documentary-decided-dp.trycloudflare.com/auth/callback",
+  "https://killing-documentary-decided-dp.trycloudflare.com/auth/shopify/callback",
+  "https://killing-documentary-decided-dp.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2024-10"
 
   [[webhooks.subscriptions]]
-  topics = [ "products/create", "products/delete" ]
+  topics = [ "products/create", "products/delete", "products/update" ]
   uri = "pubsub://salesmate-443311:PRODUCTS"
 
 [pos]

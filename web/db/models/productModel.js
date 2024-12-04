@@ -14,6 +14,7 @@ const productsSchema = new mongoose.Schema({
   images: { type: Array },   // Array of images
   options: { type: Array },  // Array of options
   shop_id: { type: Number, ref: "Shop", required: true }, // Use `id` field from Shop schema
+  shop_domain: { type: String, required: true }, // Store domain, linked conceptually to the domain in Shop schema
 });
 
 const Products = mongoose.model("products", productsSchema);

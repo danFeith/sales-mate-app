@@ -35,7 +35,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
     const newMessages = [...messages, { type: 'user', text }];
     setMessages(newMessages);
     setIsLoading(true);
-  
+    
     try {
       // Define the request payload
       const payload = {
@@ -65,7 +65,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
   return (
     <div className="chatbot-modal">
       <ChatbotHeader onClose={onClose} />
-      {window.shopDomain}
       <ChatbotMessages
         messages={messages}
         setMessages={setMessages}

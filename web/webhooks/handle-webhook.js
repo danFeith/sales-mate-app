@@ -15,7 +15,7 @@ export const handleWebhook = async (shopDomain, webhookId, topic, body, processL
         }
 
         // Get the related shopId 
-        const shop = await Shop.findOne({ domain: shopDomain }, { id: 1 }).lean()
+        const shop = await Shop.findOne({ domain: shopDomain }, { id: 1, domain: 1 }).lean()
 
         const payload = JSON.parse(body)
 
@@ -29,7 +29,7 @@ export const handleWebhook = async (shopDomain, webhookId, topic, body, processL
         });
 
         // Call your business logic for processing the webhook
-        await processLogic(shop.id, payload);
+        await processLogic(shop.id, payload, shop.domain);
 
         console.log(`Webhook ${webhookId} processed successfully.`);
     } catch (error) {

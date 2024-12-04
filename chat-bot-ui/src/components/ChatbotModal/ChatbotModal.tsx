@@ -3,6 +3,7 @@ import ChatbotHeader from '../ChatbotHeader/ChatbotHeader';
 import ChatbotMessages from '../ChatbotMessages/ChatbotMessages';
 import ChatbotInput from '../ChatbotInput/ChatbotInput';
 import './ChatbotModal.css';
+import axios from 'axios';
 
 interface ChatbotModalProps {
   onClose: () => void;
@@ -30,16 +31,31 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
-
+  
     const newMessages = [...messages, { type: 'user', text }];
     setMessages(newMessages);
     setIsLoading(true);
-
+  
     try {
-      const response = await fetch(`https://shopify-openai-server.onrender.com/ask?query=${encodeURIComponent(text)}`);
-      const data = await response.json();
-      setMessages([...newMessages, { type: 'bot', text: data.answer }]);
-    } catch {
+      // Define the request payload
+      const payload = {
+        user_message: text,
+        shop_domain: window.shopDomain,
+      };
+  
+      // Make the POST request with axios
+      const response = await axios.post(
+        'https://eccomerce-virtual-assistant.onrender.com/chat',
+        payload
+      );
+  
+      // Extract model_reply from the response
+      const { model_reply } = response.data;
+  
+      // Update messages with the bot's reply
+      setMessages([...newMessages, { type: 'bot', text: model_reply }]);
+    } catch (error) {
+      console.error('Error sending message:', error);
       setMessages([...newMessages, { type: 'bot', text: 'Sorry, I could not fetch an answer. Please try again later.' }]);
     } finally {
       setIsLoading(false);

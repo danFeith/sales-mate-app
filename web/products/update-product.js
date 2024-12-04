@@ -1,6 +1,6 @@
 import Products from "../db/models/productModel.js";
 
-export const updateProduct = async (shopId, payload) => {
+export const updateProduct = async (shopId, payload, shopDomain) => {
   const {
     id,
     title,
@@ -34,6 +34,7 @@ export const updateProduct = async (shopId, payload) => {
         images,
         options,
         shop_id: payload.shop_id, // Ensure the shop ID is updated
+        shop_domain: shopDomain
       },
       { new: true, upsert: true } // Return the updated document or insert a new one
     );

@@ -5,7 +5,7 @@ import Products from "../db/models/productModel.js";
  * @param {string} shop - The shop domain.
  * @param {object} payload - The payload from the PRODUCTS_CREATE webhook.
  */
-export const saveProduct = async (shopId, payload) => {
+export const saveProduct = async (shopId, payload, shopDomain) => {
   const {
     id,
     title,
@@ -36,6 +36,7 @@ export const saveProduct = async (shopId, payload) => {
       images,
       options,
       shop_id: shopId, // Make sure shop_id is included in the payload
+      shop_domain: shopDomain
     });
 
     await newProduct.save();

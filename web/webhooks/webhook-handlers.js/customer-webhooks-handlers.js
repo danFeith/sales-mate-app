@@ -1,9 +1,19 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
+import { handleWebhook } from "../handle-webhook.js";
 
 /**
  * @type {{[key: string]: import("@shopify/shopify-api").WebhookHandler}}
  */
 export const customerWebhooksHandlers = {
+
+  APP_UNINSTALLED: {
+    deliveryMethod: 'http',
+    callbackUrl: '/api/webhooks/app_uninstalled',
+    callback: async (topic, shopDomain, body, webhookId) => {
+      console.log(`App uninstalled for shop: ${shopDomain}`);
+    }
+  },
+
   /**
    * Customers can request their data from a store owner. When this happens,
    * Shopify invokes this privacy webhook.

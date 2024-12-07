@@ -12,7 +12,6 @@ const shopSchema = new mongoose.Schema({
   shop_owner: { type: String },
   plan_name: { type: String },
   phone: { type: String },
-  access_token: { type: String }
 });
 
 const Shop = mongoose.model("Shop", shopSchema);

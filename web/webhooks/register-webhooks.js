@@ -1,13 +1,13 @@
-import Shop from '../db/models/shopModel.js';
+import ShopifySession from '../db/models/shopifySession.js';
 import shopify from '../shopify.js'
 
 
 export const registerWebhooksForAllShops = async () => {
     try {
-        const shops = await Shop.find({}).lean(); // Fetch all shops from the database
+        const shopifySessions = await ShopifySession.find({}).lean()
 
-        for (const shop of shops) {
-            await registerShopWebhooks(shop.domain, shop.access_token);
+        for (const session of shopifySessions) {
+            await registerShopWebhooks(session.shop, session.accessToken);
         }
     } catch (error) {
         console.error('Error registering webhooks for all shops:', error.message);

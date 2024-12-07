@@ -5,11 +5,10 @@ import express from "express";
 import serveStatic from "serve-static";
 import shopify from "./shopify.js";
 import { fetchAllProducts } from "./products/fetch-all-products.js";
-import { initShop } from "./shops/init-shop.js";
 import connectDB from "./db/connect.js";
 import dotenv from "dotenv";
 import { registerWebhooksForAllShops } from "./webhooks/register-webhooks.js";
-import { customerWebhooksHandlers } from "./webhooks/webhook-handlers.js/customer-webhooks,handlers.js";
+import { customerWebhooksHandlers } from "./webhooks/webhook-handlers.js/customer-webhooks-handlers.js";
 import { productsWebhooksHandlers } from "./webhooks/webhook-handlers.js/products-webhooks-handlers.js";
 import { onInstall } from "./middlewares/on-install-middlware.js";
 

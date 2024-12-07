@@ -3,7 +3,7 @@
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
 name = "SalesMateApp"
 handle = "salesmateapp"
-application_url = "https://gordon-sitemap-vids-bennett.trycloudflare.com"
+application_url = "https://carter-elliott-acknowledge-activists.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://gordon-sitemap-vids-bennett.trycloudflare.com/auth/callback",
-  "https://gordon-sitemap-vids-bennett.trycloudflare.com/auth/shopify/callback",
-  "https://gordon-sitemap-vids-bennett.trycloudflare.com/api/auth/callback"
+  "https://carter-elliott-acknowledge-activists.trycloudflare.com/auth/callback",
+  "https://carter-elliott-acknowledge-activists.trycloudflare.com/auth/shopify/callback",
+  "https://carter-elliott-acknowledge-activists.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

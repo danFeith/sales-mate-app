@@ -17,7 +17,7 @@ export async function initShop(shop, accessToken) {
         // Save shop data to MongoDB
         const savedShop = await Shop.findOneAndUpdate(
             { id: shopData.id },
-            {...shopData, access_token: accessToken},
+            {...shopData},
             { upsert: true, new: true }
         );
 
@@ -32,6 +32,7 @@ export async function initShop(shop, accessToken) {
             },
         }));
         const result = await Products.bulkWrite(bulkOps);
+        console.log("BULK OPERATION RESULT", result)
         console.log(`Bulk operation successful: ${result.nModified} documents updated.`);
       
 

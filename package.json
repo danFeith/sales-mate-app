@@ -12,6 +12,7 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@shopify/shopify-app-session-storage-mongodb": "^4.0.9",
     "axios": "^1.7.8"
   },
   "author": "danfeithlicher",

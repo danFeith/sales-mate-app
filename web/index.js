@@ -62,7 +62,7 @@ app.get("/api/products/all-rest", async (_req, res) => {
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
-app.use("/*", async (req, res, next) => {
+app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   res
     .status(200)
     .set("Content-Type", "text/html")

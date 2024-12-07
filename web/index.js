@@ -63,7 +63,6 @@ app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
 app.use("/*", async (req, res, next) => {
-
   const path = req.path;
 
   // Exclude Shopify OAuth paths from ensureInstalledOnShop
@@ -75,19 +74,24 @@ app.use("/*", async (req, res, next) => {
   // Run Shopify's ensureInstalledOnShop for all other paths
   try {
     await shopify.ensureInstalledOnShop()(req, res, next);
+    if (res.headersSent) return; // Don't run further logic if response was sent
   } catch (error) {
     console.error(`Error ensuring shop is installed for path: ${path}`, error.message);
-    res.status(500).send('Error ensuring shop is installed.');
+    if (!res.headersSent) {
+       res.status(500).send('Error ensuring shop is installed.');
+    }
   }
 
-  res
-    .status(200)
-    .set("Content-Type", "text/html")
-    .send(
-      readFileSync(join(STATIC_PATH, "index.html"))
-        .toString()
-        .replace("%VITE_SHOPIFY_API_KEY%", process.env.SHOPIFY_API_KEY || "")
-    );
+  if (!res.headersSent) {
+    res
+      .status(200)
+      .set("Content-Type", "text/html")
+      .send(
+        readFileSync(join(STATIC_PATH, "index.html"))
+          .toString()
+          .replace("%VITE_SHOPIFY_API_KEY%", process.env.SHOPIFY_API_KEY || "")
+      );
+  }
 });
 
 

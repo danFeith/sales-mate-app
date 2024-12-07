@@ -1,15 +1,41 @@
 .chatbot-modal {
-    z-index: 1001;
-    position: fixed;
-    bottom: 90px;
-    right: 50px;
-    width: 360px;
-    height: 600px;
-    background-color: #f7f9fc; /* Light gray background */
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  z-index: 1001;
+  position: fixed;
+  bottom: 90px;
+  right: 50px;
+  width: 360px;
+  height: 600px;
+  background-color: #f7f9fc; 
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Animation Defaults */
+  opacity: 0; 
+  transform: translateY(100%); 
+  transition: opacity 0.2s ease, transform 0.2s ease; 
+}
+
+.chatbot-modal.show {
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+@media (max-width: 768px) {
+  .chatbot-modal {
+    width: 90vw; 
+    height: 90vh; 
+    bottom: 5vh; 
+    right: 5vw; 
+    left: 5vw; 
+    top: 5vh; 
+    border-radius: 12px; 
+    transform: translateY(100%); 
   }
-  
+
+  .chatbot-modal.show {
+    transform: translateY(0); 
+  }
+}

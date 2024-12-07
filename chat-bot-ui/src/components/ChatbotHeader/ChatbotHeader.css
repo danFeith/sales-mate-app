@@ -1,6 +1,6 @@
 /* Header Section */
 .chatbot-modal-header {
-    height: 70px !important;
+    height: 90px !important;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;

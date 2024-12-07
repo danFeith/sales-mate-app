@@ -20,7 +20,7 @@
   font-size: 14px;
 }
 
-.chatbot-message.bot {
+.chatbot-message.assistant {
   background: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   align-self: flex-start;

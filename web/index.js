@@ -62,7 +62,24 @@ app.get("/api/products/all-rest", async (_req, res) => {
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
-app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
+app.use("/*", async (req, res, next) => {
+
+  const path = req.path;
+
+  // Exclude Shopify OAuth paths from ensureInstalledOnShop
+  if (path.startsWith('/api/auth') || path.startsWith('/api/auth/callback')) {
+    console.log('Skipping ensureInstalledOnShop for OAuth paths:', path);
+    next();
+  }
+
+  // Run Shopify's ensureInstalledOnShop for all other paths
+  try {
+    await shopify.ensureInstalledOnShop()(req, res, next);
+  } catch (error) {
+    console.error(`Error ensuring shop is installed for path: ${path}`, error.message);
+    res.status(500).send('Error ensuring shop is installed.');
+  }
+
   res
     .status(200)
     .set("Content-Type", "text/html")

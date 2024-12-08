@@ -4,38 +4,93 @@
   bottom: 90px;
   right: 50px;
   width: 360px;
-  height: 600px;
-  background-color: #f7f9fc; 
+  height: 650px;
+  background-color: #f7f9fc;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  /* Animation Defaults */
-  opacity: 0; 
-  transform: translateY(100%); 
-  transition: opacity 0.2s ease, transform 0.2s ease; 
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .chatbot-modal.show {
-  opacity: 1; 
-  transform: translateY(0); 
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 768px) {
   .chatbot-modal {
-    width: 90vw; 
-    height: 90vh; 
-    bottom: 5vh; 
-    right: 5vw; 
-    left: 5vw; 
-    top: 5vh; 
-    border-radius: 12px; 
-    transform: translateY(100%); 
+    width: 90vw;
+    height: 90vh;
+    bottom: 5vh;
+    right: 5vw;
+    left: 5vw;
+    top: 5vh;
+    border-radius: 12px;
   }
 
   .chatbot-modal.show {
-    transform: translateY(0); 
+    transform: translateY(0);
   }
+}
+
+/* Product Card Styles */
+.product-card {
+  cursor: pointer;
+  display: flex;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 10px 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a73e8;
+  margin-bottom: 10px;
+}
+
+.product-link {
+  text-align: center;
+  color: #fff;
+  background-color: #1a73e8;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.product-link:hover {
+  background-color: #0c47c0;
 }

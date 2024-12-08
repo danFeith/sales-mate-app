@@ -1,14 +1,18 @@
-import React from 'react';
-import ChatLogo from '../../assets/chat-default-icon.svg';
-import './ChatbotButton.css';
+import React from "react";
+import ChatLogo from "../../assets/chat-default-icon.svg";
+import "./ChatbotButton.css";
 
 interface ChatbotButtonProps {
   onClick: () => void;
+  buttonRef: React.RefObject<HTMLDivElement>;
 }
 
-const ChatbotButton: React.FC<ChatbotButtonProps> = ({ onClick }) => {
+const ChatbotButton: React.FC<ChatbotButtonProps> = ({
+  onClick,
+  buttonRef,
+}) => {
   return (
-    <div className="chatbot-button" onClick={onClick}>
+    <div ref={buttonRef} className="chatbot-button" onClick={onClick}>
       <img src={ChatLogo} alt="Chatbot Logo" className="chatbot-button-icon" />
     </div>
   );

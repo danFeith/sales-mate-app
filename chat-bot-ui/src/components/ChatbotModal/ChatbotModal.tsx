@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatbotHeader from "../ChatbotHeader/ChatbotHeader";
 import ChatbotMessages from "../ChatbotMessages/ChatbotMessages";
 import ChatbotInput from "../ChatbotInput/ChatbotInput";
@@ -12,13 +12,41 @@ import { Message } from "../../types";
 
 interface ChatbotModalProps {
   onClose: () => void;
+  modalRef: React.RefObject<HTMLDivElement>;
 }
 
-const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
-  const modalRef = useRef<HTMLDivElement>(null); // Ref to the modal itself
+const assistantProductRecommandationMessage: Message = {
+  type: "assistant",
+  text: "Here are some top recommendations for you!",
+  products_recommendations: [
+    {
+      title: "The Complete Snowboard",
+      description:
+        "A high-performance snowboard designed for extreme mountain adventures.",
+      price: 799.99,
+      currency: "ILS",
+      image_url:
+        "https://cdn.shopify.com/s/files/1/0612/5142/0227/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1731185145",
+      product_link:
+        "https://quickstart-49562075.myshopify.com/products/the-minimal-snowboard",
+    },
+    {
+      title: "Mountain Slayer Snowboard",
+      description:
+        "A high-performance snowboard designed for extreme mountain adventures.",
+      price: 499.99,
+      currency: "ILS",
+      image_url:
+        "https://cdn.shopify.com/s/files/1/0612/5142/0227/files/Main_d624f226-0a89-4fe1-b333-0d1548b43c06.jpg?v=1731185145",
+      product_link:
+        "https://quickstart-49562075.myshopify.com/products/the-minimal-snowboard",
+    },
+  ],
+};
+
+const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   const [messages, setMessages] = useState<Message[]>([
     { type: "assistant", text: "How can we help you today? 👋" },
-    { type: "assistant", text: "Chat With Human Instead", isButton: true },
   ]);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,22 +59,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
     return () => setIsVisible(false); // Clean up when component unmounts
   }, []);
 
-  // Handle clicks outside of the modal to close it
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose(); // Call the onClose method if the click is outside
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
 
@@ -56,36 +68,38 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      // Define the request payload
       const payload = {
         user_message: text,
         shop_domain: window.shopDomain,
       };
 
-      // Make the POST request with axios
       const response = await axios.post(
         "https://eccomerce-virtual-assistant.onrender.com/chat",
         payload
       );
 
-      // Extract model_reply from the response
-      const { model_reply } = response.data;
+      const { model_reply, products_recommendations } = response.data;
 
-      // Update messages with the bot's reply
       const newAssistantMessage: Message = {
         type: "assistant",
         text: model_reply,
+        products_recommendations: products_recommendations || [], // If no products, default to an empty array
       };
+
       setMessages([...messages, newAssistantMessage]);
       addMessageToSessionConversation(newAssistantMessage);
     } catch (error) {
       console.error("Error sending message:", error);
-      const assistantErrortMessage: Message = {
-        type: "assistant",
-        text: "Sorry, I could not fetch an answer. Please try again later.",
-      };
-      setMessages([...messages, ...[newUserMessage, assistantErrortMessage]]);
-      addMessageToSessionConversation(assistantErrortMessage);
+      // const assistantErrorMessage: Message = {
+      //   type: "assistant",
+      //   text: "Sorry, I could not fetch an answer. Please try again later.",
+      // };
+      setMessages([
+        ...messages,
+        newUserMessage,
+        assistantProductRecommandationMessage,
+      ]);
+      addMessageToSessionConversation(assistantProductRecommandationMessage);
     } finally {
       setIsLoading(false);
     }
@@ -98,7 +112,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose }) => {
         messages={messages}
         setMessages={setMessages}
         isLoading={isLoading}
-        handleSendMessage={handleSendMessage} // Pass the handler to messages
+        handleSendMessage={handleSendMessage}
       />
       <ChatbotInput
         userInput={userInput}

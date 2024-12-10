@@ -24,7 +24,9 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
         placeholder="Write a message..."
       />
       <button
-        className="chatbot-send-button"
+        className={`chatbot-send-button ${
+          userInput.length < 1 ? "disabled" : ""
+        }`}
         onClick={() => {
           setUserInput("");
           handleSendMessage();

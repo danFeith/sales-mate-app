@@ -26,15 +26,19 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
       {messages.map((msg, index) => (
         <React.Fragment key={index}>
           {/* Text message */}
-          {msg.text && (
-            <div className={`chatbot-message ${msg.type}`}>
+          {msg?.text && (
+            <div
+              className={`chatbot-message ${msg.type} ${
+                msg.isButton ? "button" : ""
+              }`}
+            >
               {msg.isButton ? (
-                <button
-                  className="chatbot-special-button"
-                  onClick={() => handleSendMessage(msg.text)}
+                <p
+                  className="chatbot-text"
+                  onClick={() => handleSendMessage(msg!.text!)}
                 >
                   {msg.text}
-                </button>
+                </p>
               ) : (
                 <p className="chatbot-text">{msg.text}</p>
               )}
@@ -65,20 +69,25 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <a href={product.product_link} style={{textDecoration: 'none'}} className="product-card">
-      <img
-        src={product.image_url}
-        alt={product.title}
-        className="product-image"
-      />
+    <a
+      href={product.product_link || "#"}
+      target="_self"
+      className="product-card"
+    >
+      {product.image_url && (
+        <img src={product.image_url} alt={product.title} className="product-image" />
+      )}
       <div className="product-details">
         <h3 className="product-title">{product.title}</h3>
-        <p className="product-price">
-          {product.price} {product.currency}
-        </p>
+        {/* {product.description && <p className="product-description">{product.description}</p>} */}
+        {product.price && product.currency && (
+          <p className="product-price">
+            {product.price} {product.currency}
+          </p>
+        )}
         <a
-          href={product.product_link}
-          target="_blank"
+          href={product.product_link || "#"}
+          target="_self"
           rel="noopener noreferrer"
           className="product-button"
         >

@@ -25,8 +25,8 @@
     cursor: pointer;
   }
   
-  .chatbot-send-button:disabled {
+  .chatbot-send-button.disabled {
     background-color: #a6c8ff;
-    cursor: not-allowed;
+    cursor: default;
   }
   

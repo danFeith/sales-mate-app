@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./app.css";
 import ChatbotButton from "./components/ChatbotButton/ChatbotButton";
 import ChatbotModal from "./components/ChatbotModal/ChatbotModal";

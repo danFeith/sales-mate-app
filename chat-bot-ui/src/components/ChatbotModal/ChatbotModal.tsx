@@ -6,43 +6,17 @@ import "./ChatbotModal.css";
 import axios from "axios";
 import {
   addMessageToSessionConversation,
+  generateConversationId,
   getSessionConversation,
+  getSessionConversationId,
+  setSessionConversationId,
 } from "../../utils";
-import { Message } from "../../types";
+import { Message, ProductRecommendation } from "../../types";
 
 interface ChatbotModalProps {
   onClose: () => void;
   modalRef: React.RefObject<HTMLDivElement>;
 }
-
-const assistantProductRecommandationMessage: Message = {
-  type: "assistant",
-  text: "Here are some top recommendations for you!",
-  products_recommendations: [
-    {
-      title: "The Complete Snowboard",
-      description:
-        "A high-performance snowboard designed for extreme mountain adventures.",
-      price: 799.99,
-      currency: "ILS",
-      image_url:
-        "https://cdn.shopify.com/s/files/1/0612/5142/0227/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1731185145",
-      product_link:
-        "https://quickstart-49562075.myshopify.com/products/the-minimal-snowboard",
-    },
-    {
-      title: "Mountain Slayer Snowboard",
-      description:
-        "A high-performance snowboard designed for extreme mountain adventures.",
-      price: 499.99,
-      currency: "ILS",
-      image_url:
-        "https://cdn.shopify.com/s/files/1/0612/5142/0227/files/Main_d624f226-0a89-4fe1-b333-0d1548b43c06.jpg?v=1731185145",
-      product_link:
-        "https://quickstart-49562075.myshopify.com/products/the-minimal-snowboard",
-    },
-  ],
-};
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   const [messages, setMessages] = useState<Message[]>([
@@ -50,13 +24,22 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   ]);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false); // Used to add the "show" class
+  const [isVisible, setIsVisible] = useState(false);
+  const [conversationId, setConversationId] = useState<number>(0);
 
   useEffect(() => {
+    let convId = getSessionConversationId();
+    if (!convId) {
+      convId = generateConversationId();
+      setSessionConversationId(convId);
+    }
+    setConversationId(convId);
+
     const conversation = getSessionConversation();
     setMessages([...messages, ...conversation]);
     setIsVisible(true);
-    return () => setIsVisible(false); // Clean up when component unmounts
+
+    return () => setIsVisible(false);
   }, []);
 
   const handleSendMessage = async (text: string) => {
@@ -70,7 +53,8 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
     try {
       const payload = {
         user_message: text,
-        shop_domain: window.shopDomain,
+        shop_domain: window.shopDomain || "dor-test-shop",
+        conv_id: conversationId,
       };
 
       const response = await axios.post(
@@ -78,28 +62,71 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
         payload
       );
 
-      const { model_reply, products_recommendations } = response.data;
+      const { model_reply } = response.data;
 
-      const newAssistantMessage: Message = {
-        type: "assistant",
-        text: model_reply,
-        products_recommendations: products_recommendations || [], // If no products, default to an empty array
-      };
+      // Parse the model_reply content
+      const content = JSON.parse(model_reply).content;
 
-      setMessages([...messages, newAssistantMessage]);
-      addMessageToSessionConversation(newAssistantMessage);
+      const newAssistantMessages: Message[] = [];
+      let productGroup: ProductRecommendation[] = [];
+
+      content.forEach((item: any) => {
+        if (item.text) {
+          // Push current product group if it exists
+          if (productGroup.length > 0) {
+            newAssistantMessages.push({
+              type: "assistant",
+              products_recommendations: [...productGroup],
+            });
+            productGroup = [];
+          }
+          // Push the text message
+          newAssistantMessages.push({ type: "assistant", text: item.text });
+        } else if (item.product_name) {
+          // Create a product recommendation object
+          const product: ProductRecommendation = {
+            title: item.product_name,
+            description: item.product_description,
+            price: item.product_price,
+            currency: item.product_currency,
+            image_url: item.product_image_url,
+            product_link: `${window.shopDomain}/products/${item.product_handle}`,
+          };
+
+          // Add product to the group
+          productGroup.push(product);
+
+          // If the group has reached 2 products, push it to messages
+          if (productGroup.length === 2) {
+            newAssistantMessages.push({
+              type: "assistant",
+              products_recommendations: [...productGroup],
+            });
+            productGroup = [];
+          }
+        }
+      });
+
+      // Push any remaining products in the group
+      // if (productGroup.length > 0) {
+      //   newAssistantMessages.push({
+      //     type: "assistant",
+      //     products_recommendations: [...productGroup],
+      //   });
+      // }
+
+      setMessages([...messages, newUserMessage, ...newAssistantMessages]);
+      newAssistantMessages.forEach((msg) =>
+        addMessageToSessionConversation(msg)
+      );
     } catch (error) {
       console.error("Error sending message:", error);
-      // const assistantErrorMessage: Message = {
-      //   type: "assistant",
-      //   text: "Sorry, I could not fetch an answer. Please try again later.",
-      // };
-      setMessages([
-        ...messages,
-        newUserMessage,
-        assistantProductRecommandationMessage,
-      ]);
-      addMessageToSessionConversation(assistantProductRecommandationMessage);
+      const assistantErrorMessage: Message = {
+        type: "assistant",
+        text: "Sorry, I could not fetch an answer. Please try again later.",
+      };
+      setMessages([...messages, newUserMessage, assistantErrorMessage]);
+      addMessageToSessionConversation(assistantErrorMessage);
     } finally {
       setIsLoading(false);
     }

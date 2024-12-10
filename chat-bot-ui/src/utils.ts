@@ -1,9 +1,11 @@
 import { Message } from "./types";
+import { v4 as uuidv4 } from "uuid";
 
 const CONVERSATION_SESSION_KEY = "conversation";
+const CONVERSATION_SESSION_ID = "conv_id";
 
 export const getSessionConversation = (): Message[] => {
-  const conversationSessionString = sessionStorage.getItem(
+  const conversationSessionString = localStorage.getItem(
     CONVERSATION_SESSION_KEY
   );
   try {
@@ -22,7 +24,7 @@ export const getSessionConversation = (): Message[] => {
 
 export const addMessageToSessionConversation = (newMessage: Message) => {
   try {
-    sessionStorage.setItem(
+    localStorage.setItem(
       CONVERSATION_SESSION_KEY,
       JSON.stringify([...getSessionConversation(), newMessage])
     );
@@ -31,5 +33,36 @@ export const addMessageToSessionConversation = (newMessage: Message) => {
       error,
       newMessage,
     });
+  }
+};
+
+export const setSessionConversationId = (convId: number) => {
+  try {
+    localStorage.setItem(CONVERSATION_SESSION_ID, convId.toString());
+  } catch (error: any) {
+    console.error("Error setting conversation Id from session", { error });
+  }
+};
+
+export const getSessionConversationId = () => {
+  try {
+    return Number(localStorage.getItem(CONVERSATION_SESSION_ID));
+  } catch (error: any) {
+    console.error("Error getting conversation Id from session", { error });
+    return null;
+  }
+};
+
+export const generateConversationId = () => {
+  try {
+    const uuid = uuidv4().replace(/[^0-9]/g, "");
+    const numericId = BigInt(uuid) % 10n ** 15n;
+    return Number(numericId);
+  } catch (error: any) {
+    console.error("Error generating conversation Id", { error });
+    const timestamp = Date.now();
+    const randomComponent = Math.floor(Math.random() * 10000);
+    const conversationId = parseInt(`${timestamp}${randomComponent}`);
+    return conversationId;
   }
 };

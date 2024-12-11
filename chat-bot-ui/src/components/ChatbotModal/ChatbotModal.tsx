@@ -11,7 +11,7 @@ import {
   getSessionConversationId,
   setSessionConversationId,
 } from "../../utils";
-import { Message, ProductRecommendation } from "../../types";
+import { Message } from "../../types";
 
 interface ChatbotModalProps {
   onClose: () => void;
@@ -21,6 +21,9 @@ interface ChatbotModalProps {
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   const [messages, setMessages] = useState<Message[]>([
     { type: "assistant", text: "How can we help you today? 👋" },
+    { type: 'user', text: "What is your best-selling shoe?", isButton: true },
+    { type: 'user', text: "What is the cheapest shoe?", isButton: true },
+    { type: 'user', text: "Any recommendations?", isButton: true },
   ]);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -44,81 +47,56 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
-
+  
     const newUserMessage: Message = { type: "user", text };
     setMessages([...messages, newUserMessage]);
     addMessageToSessionConversation(newUserMessage);
     setIsLoading(true);
-
+  
     try {
       const payload = {
         user_message: text,
         shop_domain: window.shopDomain || "dor-test-shop",
         conv_id: conversationId,
       };
-
+  
       const response = await axios.post(
         "https://eccomerce-virtual-assistant.onrender.com/chat",
         payload
       );
-
+  
       const { model_reply } = response.data;
-
+  
       // Parse the model_reply content
       const content = JSON.parse(model_reply).content;
-
+  
       const newAssistantMessages: Message[] = [];
-      let productGroup: ProductRecommendation[] = [];
-
+  
       content.forEach((item: any) => {
         if (item.text) {
-          // Push current product group if it exists
-          if (productGroup.length > 0) {
-            newAssistantMessages.push({
-              type: "assistant",
-              products_recommendations: [...productGroup],
-            });
-            productGroup = [];
-          }
-          // Push the text message
+          // Add text message as a regular assistant message
           newAssistantMessages.push({ type: "assistant", text: item.text });
         } else if (item.product_name) {
-          // Create a product recommendation object
-          const product: ProductRecommendation = {
-            title: item.product_name,
-            description: item.product_description,
-            price: item.product_price,
-            currency: item.product_currency,
-            image_url: item.product_image_url,
-            product_link: `${window.shopDomain}/products/${item.product_handle}`,
+          // Add product message with description and product details
+          const productMessage: Message = {
+            type: "assistant",
+            text: item.product_description,
+            products_recommendations: [
+              {
+                title: item.product_name,
+                price: item.product_price,
+                currency: item.product_currency,
+                image_url: item.product_image_url,
+                product_link: `${window.shopDomain}/products/${item.product_handle}`,
+              },
+            ],
           };
-
-          // Add product to the group
-          productGroup.push(product);
-
-          // If the group has reached 2 products, push it to messages
-          if (productGroup.length === 2) {
-            newAssistantMessages.push({
-              type: "assistant",
-              products_recommendations: [...productGroup],
-            });
-            productGroup = [];
-          }
+          newAssistantMessages.push(productMessage);
         }
       });
-
-      // Push any remaining products in the group
-      // if (productGroup.length > 0) {
-      //   newAssistantMessages.push({
-      //     type: "assistant",
-      //     products_recommendations: [...productGroup],
-      //   });
-      // }
-
+  
       setMessages([...messages, newUserMessage, ...newAssistantMessages]);
-      newAssistantMessages.forEach((msg) =>
-        addMessageToSessionConversation(msg)
-      );
+      newAssistantMessages.forEach((msg) => addMessageToSessionConversation(msg));
     } catch (error) {
       console.error("Error sending message:", error);
       const assistantErrorMessage: Message = {
@@ -131,6 +109,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div ref={modalRef} className={`chatbot-modal ${isVisible ? "show" : ""}`}>

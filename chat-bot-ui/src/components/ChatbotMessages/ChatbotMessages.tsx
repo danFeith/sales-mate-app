@@ -25,8 +25,8 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
     <div className="chatbot-messages">
       {messages.map((msg, index) => (
         <React.Fragment key={index}>
-          {/* Text message */}
-          {msg?.text && (
+          {/* Text Messages */}
+          {msg?.text && !msg.products_recommendations && (
             <div
               className={`chatbot-message ${msg.type} ${
                 msg.isButton ? "button" : ""
@@ -34,7 +34,7 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
             >
               {msg.isButton ? (
                 <p
-                  className="chatbot-text"
+                  className="chatbot-text button"
                   onClick={() => handleSendMessage(msg!.text!)}
                 >
                   {msg.text}
@@ -45,14 +45,15 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
             </div>
           )}
 
-          {/* Product Recommendations */}
+          {/* Product Messages */}
           {msg.products_recommendations && (
-            <div className="chatbot-message assistant products">
+            <div className="chatbot-message assistant">
+              {/* Product Description */}
+              {msg.text && <p className="product-description">{msg.text}</p>}
+              {/* Product Cards */}
               {msg.products_recommendations.map((product, productIndex) => (
                 <ProductCard key={productIndex} product={product} />
               ))}
-              {/* <div className="product-recommendations"> */}
-              {/* </div> */}
             </div>
           )}
         </React.Fragment>
@@ -79,20 +80,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
       <div className="product-details">
         <h3 className="product-title">{product.title}</h3>
-        {/* {product.description && <p className="product-description">{product.description}</p>} */}
+        {product.description && <p className="product-description">{product.description}</p>}
         {product.price && product.currency && (
           <p className="product-price">
             {product.price} {product.currency}
           </p>
         )}
-        <a
-          href={product.product_link || "#"}
-          target="_self"
-          rel="noopener noreferrer"
-          className="product-button"
-        >
-          View Product
-        </a>
       </div>
     </a>
   );

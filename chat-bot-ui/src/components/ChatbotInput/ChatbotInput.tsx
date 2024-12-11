@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ChatbotInput.css";
 
 interface ChatbotInputProps {
@@ -14,8 +14,25 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
   handleSendMessage,
   isLoading,
 }) => {
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isKeyboard =
+        window.innerHeight < document.documentElement.clientHeight - 100;
+      setIsKeyboardVisible(isKeyboard);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="chatbot-input-container">
+    <div
+      className={`chatbot-input-container ${
+        isKeyboardVisible ? "keyboard-visible" : ""
+      }`}
+    >
       <input
         type="text"
         className="chatbot-input"

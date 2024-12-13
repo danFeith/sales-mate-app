@@ -1,3 +1,4 @@
+import { initialMessages } from "./constants";
 import { Message } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,6 +37,19 @@ export const addMessageToSessionConversation = (newMessage: Message) => {
   }
 };
 
+export const initConversationSessionHistory = () => {
+  try {
+    localStorage.setItem(
+      CONVERSATION_SESSION_KEY,
+      JSON.stringify(initialMessages)
+    );
+  } catch (error: any) {
+    console.error("error initiating conversation session storage", {
+      error,
+    });
+  }
+};
+
 export const setSessionConversationId = (convId: number) => {
   try {
     localStorage.setItem(CONVERSATION_SESSION_ID, convId.toString());
@@ -49,6 +63,15 @@ export const getSessionConversationId = () => {
     return Number(localStorage.getItem(CONVERSATION_SESSION_ID));
   } catch (error: any) {
     console.error("Error getting conversation Id from session", { error });
+    return null;
+  }
+};
+
+export const deleteSessionConversationId = () => {
+  try {
+    return Number(localStorage.removeItem(CONVERSATION_SESSION_ID));
+  } catch (error: any) {
+    console.error("Error deleting conversation Id from session", { error });
     return null;
   }
 };

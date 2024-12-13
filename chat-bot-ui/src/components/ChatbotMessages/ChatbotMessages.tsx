@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import "./ChatbotMessages.css";
 import { Message, ProductRecommendation } from "../../types";
 
@@ -14,22 +14,30 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
   isLoading,
   handleSendMessage,
 }) => {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
   // Scroll to the bottom whenever messages are updated
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const messagesContainer = document.getElementById("messages-container");
+    if (messagesContainer) {
+      messagesContainer.scroll({
+        top: messagesContainer.scrollHeight + 1000,
+        behavior: "smooth",
+      });
+      console.log(
+        "Scrolling to bottom of messages container:",
+        messagesContainer.scrollHeight
+      );
+    }
   }, [messages]);
 
   return (
-    <div className="chatbot-messages">
+    <div className="chatbot-messages" id="messages-container">
       {messages.map((msg, index) => (
         <React.Fragment key={index}>
-          {/* Text message */}
-          {msg?.text && (
+          {/* Text Messages */}
+          {msg?.text && !msg.products_recommendations && (
             <div
               className={`chatbot-message ${msg.type} ${
-                msg.isButton ? "button" : ""
+                msg.isButton ? "suggestion" : ""
               }`}
             >
               {msg.isButton ? (
@@ -45,20 +53,20 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
             </div>
           )}
 
-          {/* Product Recommendations */}
+          {/* Product Messages */}
           {msg.products_recommendations && (
-            <div className="chatbot-message assistant products">
+            <div className="chatbot-message assistant">
+              {/* Product Description */}
+              {msg.text && <p className="product-description">{msg.text}</p>}
+              {/* Product Cards */}
               {msg.products_recommendations.map((product, productIndex) => (
                 <ProductCard key={productIndex} product={product} />
               ))}
-              {/* <div className="product-recommendations"> */}
-              {/* </div> */}
             </div>
           )}
         </React.Fragment>
       ))}
       {isLoading && <div className="chatbot-message assistant">Typing...</div>}
-      <div ref={messagesEndRef}></div>
     </div>
   );
 };
@@ -75,11 +83,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className="product-card"
     >
       {product.image_url && (
-        <img src={product.image_url} alt={product.title} className="product-image" />
+        <img
+          src={product.image_url}
+          alt={product.title}
+          className="product-image"
+        />
       )}
       <div className="product-details">
         <h3 className="product-title">{product.title}</h3>
-        {/* {product.description && <p className="product-description">{product.description}</p>} */}
+        {product.description && (
+          <p className="product-description">{product.description}</p>
+        )}
         {product.price && product.currency && (
           <p className="product-price">
             {product.price} {product.currency}

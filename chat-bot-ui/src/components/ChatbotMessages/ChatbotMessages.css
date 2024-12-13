@@ -1,3 +1,4 @@
+/* Chatbot Messages Container */
 .chatbot-messages {
   display: flex;
   flex-direction: column;
@@ -5,12 +6,14 @@
   overflow-y: auto;
   padding: 16px;
   gap: 12px;
-
+  line-height: 1.6; /* Improved line-height for readability */
   /* Hide scrollbar for all browsers */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  height: 100%;
 }
 
+/* General Chatbot Message Styles */
 .chatbot-message {
   display: flex;
   flex-direction: column;
@@ -20,34 +23,39 @@
   font-size: 14px;
 }
 
+/* Assistant Message */
 .chatbot-message.assistant {
   background: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   align-self: flex-start;
   margin-top: 16px; /* Add spacing between assistant messages */
+  color: #333; /* Improved contrast for readability */
+
 }
 
+/* Product Recommendation Messages */
 .chatbot-message.assistant.products {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: flex-start;
   max-width: 100%;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0px; /* Add spacing between assistant messages */
-  background: none;
-  box-shadow: none;
-  gap: 16px;
-  align-self: center;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 16px;
+  gap: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin-top: 16px; /* Add spacing between assistant messages */
 }
 
+/* User Message */
 .chatbot-message.user {
   background: #e3f2fd; /* Light blue background */
   align-self: flex-end;
+  margin-top: 16px; /* Add spacing between assistant messages */
 }
 
-.chatbot-message.user.button {
+/* Button-Like User Messages */
+.chatbot-message.user.suggestion {
   border: dashed 1px #3b82f6;
   display: flex;
   align-items: center;
@@ -60,18 +68,32 @@
   margin-bottom: 0px;
   margin-top: 0px;
   font-size: 14px;
+  letter-spacing: 0.02em; /* Slightly increased spacing for button text */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
 }
 
-.chatbot-text {
-  margin-bottom: 0px;
-  margin-top: 0px;
-  font-size: 14px;
-}
-
-.chatbot-message.user.button:hover {
+.chatbot-message.user.suggestion:hover {
   color: black;
   background-color: #edf5fb;
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Chatbot Text */
+.chatbot-text {
+  margin-bottom: 0;
+  margin-top: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Product Description Styling */
+.product-description {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #333;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6; /* Improved line-height for readability */
 }
 
 /* Product Recommendations Container */
@@ -83,18 +105,21 @@
   margin-top: 12px;
 }
 
-/* Product Card Styles */
+/* Product Card Styling */
 .product-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  text-decoration: none;
   align-items: center;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 12px;
-  width: 140px; /* Smaller width to fit grid layout */
+  width: 100%;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 8px; /* Increased spacing between elements inside the card */
+
 }
 
 .product-card:hover {
@@ -104,9 +129,9 @@
 
 /* Product Image Styling */
 .product-image {
-  width: 80px; /* Smaller image */
-  height: 80px;
-  border-radius: 50%; /* Makes the image rounded */
+  width: 90px;
+  height: 90px;
+  border-radius: 8px; /* Slightly rounded corners */
   object-fit: cover;
   margin-bottom: 8px;
 }
@@ -123,15 +148,15 @@
 .product-price {
   font-size: 14px;
   font-weight: bold;
-  color: #1a73e8;
+  color: #333 !important;
   margin-bottom: 12px;
 }
 
-/* Button Styling */
+/* Product Button Styling */
 .product-button {
   font-size: 12px;
   font-weight: 600;
-  color: #1a73e8;
+  /* color: #1a73e8; */
   border: 1px solid #1a73e8;
   border-radius: 8px;
   padding: 6px 12px;

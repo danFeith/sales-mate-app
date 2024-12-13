@@ -1,12 +1,28 @@
-import React from 'react';
-import ChatIcon from '../../assets/chat-default-icon.svg'
-import './ChatbotHeader.css';
+import React from "react";
+import ChatIcon from "../../assets/chat-default-icon.svg";
+import "./ChatbotHeader.css";
+import { Message } from "../../types";
+import { initialMessages } from "../../constants";
+import {
+  deleteSessionConversationId,
+  initConversationSessionHistory,
+} from "../../utils";
 
 interface ChatbotHeaderProps {
   onClose: () => void;
+  setMessages: (messages: Message[]) => void;
 }
 
-const ChatbotHeader: React.FC<ChatbotHeaderProps> = ({ onClose }) => {
+const ChatbotHeader: React.FC<ChatbotHeaderProps> = ({
+  onClose,
+  setMessages,
+}) => {
+  const handleNewChat = () => {
+    setMessages(initialMessages);
+    initConversationSessionHistory();
+    deleteSessionConversationId();
+  };
+
   return (
     <div>
       {/* Header Section */}
@@ -18,12 +34,19 @@ const ChatbotHeader: React.FC<ChatbotHeaderProps> = ({ onClose }) => {
           <span className="chatbot-status-dot"></span>
           <span className="chatbot-header-title">AI Chatbot</span>
         </div>
-        <button className="chatbot-options-button">⋮</button>
+        <div className="start-new-chat-button" onClick={handleNewChat}>
+          new chat
+        </div>
       </div>
 
       {/* Circular Logo */}
       <div className="chatbot-logo-container">
-        <img src={ChatIcon} alt="Chatbot Logo" className="chatbot-logo" width={30} />
+        <img
+          src={ChatIcon}
+          alt="Chatbot Logo"
+          className="chatbot-logo"
+          width={30}
+        />
       </div>
     </div>
   );

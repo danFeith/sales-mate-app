@@ -10,6 +10,7 @@
   /* Hide scrollbar for all browsers */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  height: 100%;
 }
 
 /* General Chatbot Message Styles */
@@ -54,7 +55,7 @@
 }
 
 /* Button-Like User Messages */
-.chatbot-message.user.button {
+.chatbot-message.user.suggestion {
   border: dashed 1px #3b82f6;
   display: flex;
   align-items: center;
@@ -71,7 +72,7 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
 }
 
-.chatbot-message.user.button:hover {
+.chatbot-message.user.suggestion:hover {
   color: black;
   background-color: #edf5fb;
   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
@@ -115,7 +116,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 12px;
   width: 100%;
-  max-width: calc(100% - 24px); /* Slightly larger width for better visual */
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   gap: 8px; /* Increased spacing between elements inside the card */

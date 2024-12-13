@@ -19,12 +19,7 @@ interface ChatbotModalProps {
 }
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
-  const [messages, setMessages] = useState<Message[]>([
-    { type: "assistant", text: "How can we help you today? 👋" },
-    { type: 'user', text: "What is your best-selling shoe?", isButton: true },
-    { type: 'user', text: "What is the cheapest shoe?", isButton: true },
-    { type: 'user', text: "Any recommendations?", isButton: true },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -47,31 +42,31 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
-  
+
     const newUserMessage: Message = { type: "user", text };
     setMessages([...messages, newUserMessage]);
     addMessageToSessionConversation(newUserMessage);
     setIsLoading(true);
-  
+
     try {
       const payload = {
         user_message: text,
         shop_domain: window.shopDomain || "dor-test-shop",
         conv_id: conversationId,
       };
-  
+
       const response = await axios.post(
         "https://eccomerce-virtual-assistant.onrender.com/chat",
         payload
       );
-  
+
       const { model_reply } = response.data;
-  
+
       // Parse the model_reply content
       const content = JSON.parse(model_reply).content;
-  
+
       const newAssistantMessages: Message[] = [];
-  
+
       content.forEach((item: any) => {
         if (item.text) {
           // Add text message as a regular assistant message
@@ -87,16 +82,18 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
                 price: item.product_price,
                 currency: item.product_currency,
                 image_url: item.product_image_url,
-                product_link: `${window.shopDomain}/products/${item.product_handle}`,
+                product_link: `/products/${item.product_handle}`,
               },
             ],
           };
           newAssistantMessages.push(productMessage);
         }
       });
-  
+
       setMessages([...messages, newUserMessage, ...newAssistantMessages]);
-      newAssistantMessages.forEach((msg) => addMessageToSessionConversation(msg));
+      newAssistantMessages.forEach((msg) =>
+        addMessageToSessionConversation(msg)
+      );
     } catch (error) {
       console.error("Error sending message:", error);
       const assistantErrorMessage: Message = {
@@ -109,11 +106,10 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <div ref={modalRef} className={`chatbot-modal ${isVisible ? "show" : ""}`}>
-      <ChatbotHeader onClose={onClose} />
+      <ChatbotHeader onClose={onClose} setMessages={setMessages} />
       <ChatbotMessages
         messages={messages}
         setMessages={setMessages}

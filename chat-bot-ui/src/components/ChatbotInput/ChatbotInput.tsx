@@ -38,6 +38,7 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
         className="chatbot-input"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
+        // onFocus={(e) => e.preventDefault()}
         placeholder="Write a message..."
       />
       <button

@@ -16,9 +16,7 @@ include_config_on_deploy = true
 scopes = "read_products"
 
 [auth]
-redirect_urls = [
-  "https://sales-mate-app.onrender.com/api/auth/callback"
-]
+redirect_urls = [ "https://sales-mate-app.onrender.com/api/auth/callback" ]
 
 [webhooks]
 api_version = "2024-10"

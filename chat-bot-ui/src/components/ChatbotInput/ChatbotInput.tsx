@@ -27,6 +27,13 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && userInput.trim() !== "") {
+      handleSendMessage();
+      setUserInput(""); // Clear the input field
+    }
+  };
+
   return (
     <div
       className={`chatbot-input-container ${
@@ -38,7 +45,9 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
         className="chatbot-input"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-        // onFocus={(e) => e.preventDefault()}
+        onKeyDown={handleKeyDown} // Added onKeyDown handler
+        inputMode="text"
+        pattern=".*"
         placeholder="Write a message..."
       />
       <button
@@ -46,8 +55,8 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
           userInput.length < 1 ? "disabled" : ""
         }`}
         onClick={() => {
-          setUserInput("");
           handleSendMessage();
+          setUserInput(""); // Clear the input field
         }}
         disabled={isLoading}
       >

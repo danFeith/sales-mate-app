@@ -5,22 +5,26 @@ import { Message } from "../../types";
 import { initialMessages } from "../../constants";
 import {
   deleteSessionConversationId,
-  initConversationSessionHistory,
+  initConversationId,
+  resetConversationSessionHistory,
 } from "../../utils";
 
 interface ChatbotHeaderProps {
   onClose: () => void;
   setMessages: (messages: Message[]) => void;
+  setConversationId: (convdId: number) => void;
 }
 
 const ChatbotHeader: React.FC<ChatbotHeaderProps> = ({
   onClose,
   setMessages,
+  setConversationId,
 }) => {
   const handleNewChat = () => {
     setMessages(initialMessages);
-    initConversationSessionHistory();
+    resetConversationSessionHistory();
     deleteSessionConversationId();
+    setConversationId(initConversationId());
   };
 
   return (

@@ -1,4 +1,3 @@
-import { initialMessages } from "./constants";
 import { Message } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -37,12 +36,9 @@ export const addMessageToSessionConversation = (newMessage: Message) => {
   }
 };
 
-export const initConversationSessionHistory = () => {
+export const resetConversationSessionHistory = () => {
   try {
-    localStorage.setItem(
-      CONVERSATION_SESSION_KEY,
-      JSON.stringify(initialMessages)
-    );
+    localStorage.setItem(CONVERSATION_SESSION_KEY, JSON.stringify([]));
   } catch (error: any) {
     console.error("error initiating conversation session storage", {
       error,
@@ -88,4 +84,13 @@ export const generateConversationId = () => {
     const conversationId = parseInt(`${timestamp}${randomComponent}`);
     return conversationId;
   }
+};
+
+export const initConversationId = () => {
+  let convId = getSessionConversationId();
+  if (!convId) {
+    convId = generateConversationId();
+    setSessionConversationId(convId);
+  }
+  return convId;
 };

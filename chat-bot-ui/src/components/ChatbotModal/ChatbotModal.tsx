@@ -6,10 +6,8 @@ import "./ChatbotModal.css";
 import axios from "axios";
 import {
   addMessageToSessionConversation,
-  generateConversationId,
   getSessionConversation,
-  getSessionConversationId,
-  setSessionConversationId,
+  initConversationId,
 } from "../../utils";
 import { Message } from "../../types";
 import { initialMessages } from "../../constants";
@@ -27,12 +25,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   const [conversationId, setConversationId] = useState<number>(0);
 
   useEffect(() => {
-    let convId = getSessionConversationId();
-    if (!convId) {
-      convId = generateConversationId();
-      setSessionConversationId(convId);
-    }
-    setConversationId(convId);
+    setConversationId(initConversationId());
 
     const conversation = getSessionConversation();
     setMessages([...messages, ...conversation]);
@@ -110,7 +103,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
 
   return (
     <div ref={modalRef} className={`chatbot-modal ${isVisible ? "show" : ""}`}>
-      <ChatbotHeader onClose={onClose} setMessages={setMessages} />
+      <ChatbotHeader setConversationId={setConversationId} onClose={onClose} setMessages={setMessages} />
       <ChatbotMessages
         messages={messages}
         setMessages={setMessages}

@@ -12,6 +12,7 @@ import {
   setSessionConversationId,
 } from "../../utils";
 import { Message } from "../../types";
+import { initialMessages } from "../../constants";
 
 interface ChatbotModalProps {
   onClose: () => void;
@@ -19,7 +20,7 @@ interface ChatbotModalProps {
 }
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);

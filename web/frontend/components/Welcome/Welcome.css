@@ -1,0 +1,70 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    height: 600px;
+    background-color: #f8f9fc;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .welcome-card {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .welcome-title {
+    font-weight: bold;
+    font-size: 4em;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .welcome-description {
+    font-size: 1.3em;
+    color: #555555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .instructions {
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .instructions-title {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333333;
+    font-weight: bold;
+  }
+  
+  .instructions-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .instructions-list li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #555555;
+    line-height: 1.5;
+  }
+  
+  .instructions-list li strong {
+    color: #3366ff;
+  }
+  
+  .footer-note {
+    font-size: 0.95em;
+    margin-top: 20px;
+    color: #777777;
+    font-style: italic;
+  }
+  

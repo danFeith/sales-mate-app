@@ -1,0 +1,79 @@
+/* Import Google Fonts */
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"); */
+
+.sidebar {
+  width: 30%;
+  height: 100vh;
+  background-color: #f8f9fc;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  /* font-family: "Inter", sans-serif; */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #3366ff;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #1e1e2d;
+  margin: 0;
+}
+
+.menu-title {
+  color: #a0a3bd;
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 10px 20px;
+  text-transform: uppercase;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #555555;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 5px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item .icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background-color: #3366ff;
+  color: #ffffff;
+}
+
+.menu-item.active .icon,
+.menu-item:hover .icon {
+  color: #ffffff;
+}

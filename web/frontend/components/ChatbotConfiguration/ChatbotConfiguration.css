@@ -1,0 +1,53 @@
+.chatbot-configuration {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .icon-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .icon-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+  }
+  
+  .change-icon-btn {
+    background-color: #3366ff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .form-section label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    gap: 5px;
+  }
+  
+  input,
+  select,
+  textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  input[type="color"] {
+    padding: 2px;
+    height: 40px;
+  }
+  

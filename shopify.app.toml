@@ -3,7 +3,7 @@
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
 name = "SalesMateApp"
 handle = "salesmateapp"
-application_url = "https://sales-mate-app.onrender.com"
+application_url = "https://tactics-alternatively-sparc-gaps.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,7 +16,11 @@ include_config_on_deploy = true
 scopes = "read_products"
 
 [auth]
-redirect_urls = [ "https://sales-mate-app.onrender.com/api/auth/callback" ]
+redirect_urls = [
+  "https://tactics-alternatively-sparc-gaps.trycloudflare.com/auth/callback",
+  "https://tactics-alternatively-sparc-gaps.trycloudflare.com/auth/shopify/callback",
+  "https://tactics-alternatively-sparc-gaps.trycloudflare.com/api/auth/callback"
+]
 
 [webhooks]
 api_version = "2024-10"

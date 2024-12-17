@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+.app {
+  display: flex;
+  height: 100vh;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f8f9fc;
+}

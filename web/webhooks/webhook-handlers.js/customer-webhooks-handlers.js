@@ -1,5 +1,4 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
-import { handleWebhook } from "../handle-webhook.js";
 
 /**
  * @type {{[key: string]: import("@shopify/shopify-api").WebhookHandler}}

@@ -1,5 +1,5 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
-import { handleWebhook } from "../handle-webhook.js";
+import { handleProductWebhook } from "../handle-webhook.js";
 import { saveProduct } from "../../products/save-product.js";
 import { deleteProduct } from "../../products/delete-product.js";
 import { updateProduct } from "../../products/update-product.js";
@@ -13,21 +13,21 @@ export const productsWebhooksHandlers = {
         deliveryMethod: DeliveryMethod.Http,
         callbackUrl: "/api/webhooks",
         callback: async (topic, shopDomain, body, webhookId) => {
-            await handleWebhook(shopDomain, webhookId, topic, body, saveProduct)
+            await handleProductWebhook(shopDomain, webhookId, topic, body, saveProduct)
         }
     },
     PRODUCTS_DELETE: {
         deliveryMethod: DeliveryMethod.Http,
         callbackUrl: "/api/webhooks",
         callback: async (topic, shopDomain, body, webhookId) => {
-            await handleWebhook(shopDomain, webhookId, topic, body, deleteProduct)
+            await handleProductWebhook(shopDomain, webhookId, topic, body, deleteProduct)
         },
     },
     PRODUCTS_UPDATE: {
         deliveryMethod: DeliveryMethod.Http,
         callbackUrl: "/api/webhooks",
         callback: async (topic, shopDomain, body, webhookId) => {
-            await handleWebhook(shopDomain, webhookId, topic, body, updateProduct)
+            await handleProductWebhook(shopDomain, webhookId, topic, body, updateProduct)
         },
     },
 }

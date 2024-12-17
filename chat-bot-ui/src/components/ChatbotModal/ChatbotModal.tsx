@@ -38,14 +38,14 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
     if (!text.trim()) return;
 
     const newUserMessage: Message = { type: "user", text };
-    setMessages([...messages, newUserMessage]);
+    setMessages([...messages.filter(m => !m.isButton), newUserMessage]);
     addMessageToSessionConversation(newUserMessage);
     setIsLoading(true);
 
     try {
       const payload = {
         user_message: text,
-        shop_domain: window.shopDomain || "dor-test-shop",
+        shop_domain: window.shopDomain || "quickstart-49562075.myshopify.com",
         conv_id: conversationId,
       };
 
@@ -84,7 +84,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
         }
       });
 
-      setMessages([...messages, newUserMessage, ...newAssistantMessages]);
+      setMessages([...messages.filter(m => !m.isButton), newUserMessage, ...newAssistantMessages]);
       newAssistantMessages.forEach((msg) =>
         addMessageToSessionConversation(msg)
       );

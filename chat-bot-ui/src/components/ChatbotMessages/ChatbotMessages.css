@@ -7,7 +7,6 @@
   padding: 16px;
   gap: 12px;
   line-height: 1.6; /* Improved line-height for readability */
-  /* Hide scrollbar for all browsers */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   height: 100%;
@@ -17,7 +16,7 @@
 .chatbot-message {
   display: flex;
   flex-direction: column;
-  max-width: 75%;
+  max-width: 80%;
   padding: 12px;
   border-radius: 12px;
   font-size: 14px;
@@ -28,9 +27,8 @@
   background: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   align-self: flex-start;
-  margin-top: 16px; /* Add spacing between assistant messages */
-  color: #333; /* Improved contrast for readability */
-
+  margin-top: 16px;
+  color: #333;
 }
 
 /* Product Recommendation Messages */
@@ -44,14 +42,14 @@
   background: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  margin-top: 16px; /* Add spacing between assistant messages */
+  margin-top: 16px;
 }
 
 /* User Message */
 .chatbot-message.user {
-  background: #e3f2fd; /* Light blue background */
+  background: #e3f2fd;
   align-self: flex-end;
-  margin-top: 16px; /* Add spacing between assistant messages */
+  margin-top: 16px;
 }
 
 /* Button-Like User Messages */
@@ -65,11 +63,11 @@
   padding: 8px 16px;
   border-radius: 12px;
   cursor: pointer;
-  margin-bottom: 0px;
-  margin-top: 0px;
+  margin-bottom: 0;
+  margin-top: 0;
   font-size: 14px;
-  letter-spacing: 0.02em; /* Slightly increased spacing for button text */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  letter-spacing: 0.02em;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .chatbot-message.user.suggestion:hover {
@@ -92,15 +90,16 @@
   margin-bottom: 12px;
   color: #333;
   border-radius: 12px;
-  font-size: 14px;
-  line-height: 1.6; /* Improved line-height for readability */
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Product Recommendations Container */
 .product-recommendations {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two products per row */
-  gap: 12px; /* Space between cards */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
   justify-content: center;
   margin-top: 12px;
 }
@@ -113,35 +112,47 @@
   align-items: center;
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 12px;
+  box-shadow: 0 16px 70px rgba(0, 0, 0, 0.15);
   width: 100%;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  gap: 8px; /* Increased spacing between elements inside the card */
-
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  gap: 8px;
+  height: 100px;
+  padding: 8px;
 }
 
 /* Product Image Styling */
 .product-image {
-  width: 90px;
-  height: 90px;
-  border-radius: 8px; /* Slightly rounded corners */
+  width: 27%;
+  height: 100%;
+  border-radius: 8px;
   object-fit: cover;
-  margin-bottom: 8px;
 }
 
 /* Product Title Styling */
 .product-title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  margin-bottom: 4px;
   color: #333;
+  text-align: left;
+  margin: 0;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 100%;
+}
+
+.product-details .bottom-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: center;
+  height: 50px;
 }
 
 /* Product Price Styling */
@@ -149,22 +160,54 @@
   font-size: 14px;
   font-weight: bold;
   color: #333 !important;
-  margin-bottom: 12px;
+  margin: 0;
+  width: 40%;
 }
 
 /* Product Button Styling */
 .product-button {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  /* color: #1a73e8; */
   border: 1px solid #1a73e8;
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 5px;
+  padding: 2px 2px;
   text-decoration: none;
   transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 25px;
+  cursor: pointer;
+  color: #1a73e8 !important;
 }
 
 .product-button:hover {
   background-color: #1a73e8;
+  color: #fff !important;
+}
+
+/* Show More / Show Less Buttons */
+.show-more-button, 
+.show-less-button {
+  background-color: #007bff;
   color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.show-more-button:hover, 
+.show-less-button:hover {
+  background-color: #0056b3;
+}
+
+.show-more-button:focus, 
+.show-less-button:focus {
+  outline: none;
 }

@@ -18,3 +18,8 @@ export const initialMessages: Message[] = [
     isButton: true,
   },
 ];
+
+export const CURRENCY_SYMBOLS: Record<string, string> = {
+  ILS: "₪",
+  USD: "$",
+};

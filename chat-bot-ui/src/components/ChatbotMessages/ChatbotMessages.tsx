@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./ChatbotMessages.css";
 import { Message, ProductRecommendation } from "../../types";
+import { CURRENCY_SYMBOLS } from "../../constants";
 
 interface ChatbotMessagesProps {
   messages: Message[];
@@ -92,21 +93,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="product-details">
         <h3 className="product-title">{product.title}</h3>
         {product.description && (
-          <p className="product-description">{product.description}</p>
-        )}
-        {product.price && product.currency && (
-          <p className="product-price">
-            {product.price} {product.currency}
+          <p className="product-description">
+              {product.description}
           </p>
         )}
-        <a
-          href={product.product_link || "#"}
-          target="_self"
-          rel="noopener noreferrer"
-          className="product-button"
-        >
-          View Product
-        </a>
+        <div className="bottom-container">
+          {product.price && product.currency && (
+            <p className="product-price">
+              {product.price}{CURRENCY_SYMBOLS[product.currency] ?? ""}
+            </p>
+          )}
+          <a
+            href={product.product_link || "#"}
+            target="_self"
+            rel="noopener noreferrer"
+            className="product-button"
+          >
+            View Product
+          </a>
+        </div>
       </div>
     </a>
   );

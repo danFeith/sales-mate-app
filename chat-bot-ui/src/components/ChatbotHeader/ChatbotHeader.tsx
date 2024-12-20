@@ -36,7 +36,7 @@ const ChatbotHeader: React.FC<ChatbotHeaderProps> = ({
         </button>
         <div className="chatbot-header-center">
           <span className="chatbot-status-dot"></span>
-          <span className="chatbot-header-title">AI Chatbot</span>
+          <span className="chatbot-header-title">AI Assistant</span>
         </div>
         <div className="start-new-chat-button" onClick={handleNewChat}>
           new chat

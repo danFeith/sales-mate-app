@@ -24,6 +24,41 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [conversationId, setConversationId] = useState<number>(0);
 
+  const timelyDisplayAssistantMessages = async ({
+    userMessage,
+    assistantMessages,
+    index = 0,
+  }: {
+    userMessage: Message;
+    assistantMessages: Message[];
+    index?: number;
+  }) => {
+    if (index === 0) {
+      setIsLoading(true);
+    }
+    console.log({ userMessage, assistantMessages, index });
+    setMessages([
+      ...messages.filter((m) => !m.isButton),
+      userMessage,
+      ...assistantMessages.slice(0, index + 1),
+    ]);
+
+    const nextMessageIndex = index + 1;
+    if (assistantMessages[nextMessageIndex]) {
+      setTimeout(
+        () =>
+          timelyDisplayAssistantMessages({
+            userMessage,
+            assistantMessages,
+            index: nextMessageIndex,
+          }),
+        2000
+      );
+    } else {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     setConversationId(initConversationId());
 
@@ -38,7 +73,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
     if (!text.trim()) return;
 
     const newUserMessage: Message = { type: "user", text };
-    setMessages([...messages.filter(m => !m.isButton), newUserMessage]);
+    setMessages([...messages.filter((m) => !m.isButton), newUserMessage]);
     addMessageToSessionConversation(newUserMessage);
     setIsLoading(true);
 
@@ -84,7 +119,10 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
         }
       });
 
-      setMessages([...messages.filter(m => !m.isButton), newUserMessage, ...newAssistantMessages]);
+      timelyDisplayAssistantMessages({
+        userMessage: newUserMessage,
+        assistantMessages: newAssistantMessages,
+      });
       newAssistantMessages.forEach((msg) =>
         addMessageToSessionConversation(msg)
       );
@@ -96,14 +134,16 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
       };
       setMessages([...messages, newUserMessage, assistantErrorMessage]);
       addMessageToSessionConversation(assistantErrorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div ref={modalRef} className={`chatbot-modal ${isVisible ? "show" : ""}`}>
-      <ChatbotHeader setConversationId={setConversationId} onClose={onClose} setMessages={setMessages} />
+      <ChatbotHeader
+        setConversationId={setConversationId}
+        onClose={onClose}
+        setMessages={setMessages}
+      />
       <ChatbotMessages
         messages={messages}
         setMessages={setMessages}

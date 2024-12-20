@@ -1,0 +1,91 @@
+
+  /* Product Recommendations Container */
+  .product-recommendations {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  
+  /* Product Card Styling */
+  .product-card {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 16px 70px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100px;
+    padding: 8px;
+  }
+  
+  /* Product Image Styling */
+  .product-image {
+    width: 27%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* Product Title Styling */
+  .product-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    margin: 0;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    height: 100%;
+  }
+  
+  .product-details .bottom-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    align-items: center;
+    height: 50px;
+  }
+  
+  /* Product Price Styling */
+  .product-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333 !important;
+    margin: 0;
+    width: 40%;
+  }
+  
+  /* Product Button Styling */
+  .product-button {
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid #1a73e8;
+    border-radius: 5px;
+    padding: 2px 2px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px;
+    height: 25px;
+    cursor: pointer;
+    color: #1a73e8 !important;
+  }
+  
+  .product-button:hover {
+    background-color: #1a73e8;
+    color: #fff !important;
+  }

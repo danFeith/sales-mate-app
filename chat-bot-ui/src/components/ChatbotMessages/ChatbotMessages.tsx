@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./ChatbotMessages.css";
-import { Message, ProductRecommendation } from "../../types";
-import { CURRENCY_SYMBOLS } from "../../constants";
+import { Message } from "../../types";
+import { ProductMessage } from "./ProductRecommendation/ProductRecommendation";
 
 interface ChatbotMessagesProps {
   messages: Message[];
@@ -55,65 +55,19 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
           )}
 
           {/* Product Messages */}
-          {msg.products_recommendations && (
-            <div className="chatbot-message assistant">
-              {/* Product Description */}
-              {msg.text && <p className="product-description">{msg.text}</p>}
-              {/* Product Cards */}
-              {msg.products_recommendations.map((product, productIndex) => (
-                <ProductCard key={productIndex} product={product} />
-              ))}
-            </div>
-          )}
+          {msg.products_recommendations && <ProductMessage msg={msg} />}
         </React.Fragment>
       ))}
-      {isLoading && <div className="chatbot-message assistant">Typing...</div>}
-    </div>
-  );
-};
-
-interface ProductCardProps {
-  product: ProductRecommendation;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  return (
-    <a
-      href={product.product_link || "#"}
-      target="_self"
-      className="product-card"
-    >
-      {product.image_url && (
-        <img
-          src={product.image_url}
-          alt={product.title}
-          className="product-image"
-        />
-      )}
-      <div className="product-details">
-        <h3 className="product-title">{product.title}</h3>
-        {product.description && (
-          <p className="product-description">
-              {product.description}
-          </p>
-        )}
-        <div className="bottom-container">
-          {product.price && product.currency && (
-            <p className="product-price">
-              {product.price}{CURRENCY_SYMBOLS[product.currency] ?? ""}
-            </p>
-          )}
-          <a
-            href={product.product_link || "#"}
-            target="_self"
-            rel="noopener noreferrer"
-            className="product-button"
-          >
-            View Product
-          </a>
+      {isLoading && (
+        <div className="chatbot-message assistant">
+          <div className="loading-container">
+            <span className="typing-dot"></span>
+            <span className="typing-dot"></span>
+            <span className="typing-dot"></span>
+          </div>
         </div>
-      </div>
-    </a>
+      )}
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
 name = "SalesMateApp"
 handle = "salesmateapp"
-application_url = "https://construct-navigation-spider-du.trycloudflare.com"
+application_url = "https://sales-mate-app.onrender.com"
 embedded = true
 
 [build]
@@ -17,9 +17,7 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://construct-navigation-spider-du.trycloudflare.com/auth/callback",
-  "https://construct-navigation-spider-du.trycloudflare.com/auth/shopify/callback",
-  "https://construct-navigation-spider-du.trycloudflare.com/api/auth/callback"
+  "https://sales-mate-app.onrender.com/api/auth/callback"
 ]
 
 [webhooks]

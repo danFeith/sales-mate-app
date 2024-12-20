@@ -52,7 +52,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
             assistantMessages,
             index: nextMessageIndex,
           }),
-        2000
+        1000
       );
     } else {
       setIsLoading(false);

@@ -13,7 +13,7 @@ export const ProductDescription = ({
   };
 
   const getShortenedDescription = (description: string) => {
-    const maxLines = 2;
+    const maxLines = 1;
     const charLimit = maxLines * 50;
     return description.length > charLimit ? (
       <>

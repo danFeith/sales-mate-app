@@ -27,9 +27,8 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey && userInput.trim() !== "") {
-      e.preventDefault(); // Prevents new line on Enter
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && userInput.trim() !== "") {
       handleSendMessage();
       setUserInput(""); // Clear the input field
     }
@@ -41,18 +40,19 @@ const ChatbotInput: React.FC<ChatbotInputProps> = ({
         isKeyboardVisible ? "keyboard-visible" : ""
       }`}
     >
-      <textarea
+      <input
+        type="text"
         className="chatbot-input"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        rows={1}
+        onKeyDown={handleKeyDown} // Added onKeyDown handler
+        inputMode="text"
+        pattern=".*"
         placeholder="Write a message..."
-        style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
       />
       <button
         className={`chatbot-send-button ${
-          isLoading || userInput.length < 1 ? "disabled" : ""
+          userInput.length < 1 ? "disabled" : ""
         }`}
         onClick={() => {
           handleSendMessage();

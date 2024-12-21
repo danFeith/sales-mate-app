@@ -1,5 +1,5 @@
 import React from "react";
-import ChatLogo from "../../assets/chat-default-icon.svg";
+import ChatLogo from "../../assets/button-logo.svg";
 import "./ChatbotButton.css";
 
 interface ChatbotButtonProps {

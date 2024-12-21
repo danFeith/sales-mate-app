@@ -60,10 +60,11 @@
   
   /* Product Price Styling */
   .product-price {
-    font-size: 14px;
+    font-size: 12px;
     color: #333 !important;
     margin: 0;
-    width: 40%;
+    width: 35%;
+    word-wrap: normal;
   }
   
   /* Product Button Styling */

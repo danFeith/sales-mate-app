@@ -1,9 +1,9 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "3a7c9ef9793e7baf3033f119e6aca902"
-name = "SalesMateApp"
-handle = "salesmateapp"
-application_url = "https://sales-mate-app.onrender.com"
+name = "Ecommind AI"
+handle = "ecommind-ai"
+application_url = "https://jeff-ignore-bottom-commodity.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,7 +17,9 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://sales-mate-app.onrender.com/api/auth/callback"
+  "https://jeff-ignore-bottom-commodity.trycloudflare.com/auth/callback",
+  "https://jeff-ignore-bottom-commodity.trycloudflare.com/auth/shopify/callback",
+  "https://jeff-ignore-bottom-commodity.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

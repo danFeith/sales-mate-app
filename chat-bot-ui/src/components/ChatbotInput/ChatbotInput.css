@@ -9,7 +9,6 @@
 
 .chatbot-input {
   scrollbar-width: none;
-  font-family: 'Arial', sans-serif;
   flex: 1;
   padding: 12px;
   border: 1px solid #ccc;

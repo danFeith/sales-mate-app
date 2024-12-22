@@ -80,7 +80,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ onClose, modalRef }) => {
     try {
       const payload = {
         user_message: text,
-        shop_domain: window.shopDomain || "quickstart-49562075.myshopify.com",
+        shop_domain: window.shopDomain || "shoesstore123235.myshopify.com",
         conv_id: conversationId,
       };
 

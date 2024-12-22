@@ -19,7 +19,7 @@ export const updateProduct = async (shopId, payload, shopDomain) => {
   try {
     // Find and update the product, or insert it if it doesn't exist
     const updatedProduct = await Products.findOneAndUpdate(
-      { id, shop_id: shopId }, // Match by Shopify product ID and shop ID
+      { id, shop_domain: shopDomain }, // Match by Shopify product ID and shop ID
       {
         id,
         title,

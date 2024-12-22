@@ -1,10 +1,10 @@
 .chatbot-modal {
   z-index: 1001;
   position: fixed;
-  bottom: 110px;
+  bottom: 100px;
   right: 50px;
-  width: 360px;
-  height: 650px;
+  width: 380px;
+  height: calc(100% - 170px);
   background-color: #f7f9fc;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);

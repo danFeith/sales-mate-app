@@ -30,17 +30,19 @@ const ChatbotMessages: React.FC<ChatbotMessagesProps> = ({
     }
   }, [messages]);
 
-  // Function to format text with **bold** support
-  const formatText = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/); // Split by **bold text**
-    return parts.map((part, index) =>
-      part.startsWith("**") && part.endsWith("**") ? (
-        <strong key={index}>{part.slice(2, -2)}</strong>
-      ) : (
-        <span key={index}>{part}</span>
-      )
-    );
-  };
+// Function to format text with **bold** support and <br> for newlines
+const formatText = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)|(\n)/); // Split by **bold text** and \n
+  return parts.map((part, index) => {
+    if (part === '\n') {
+      return <br key={index} />;
+    } else if (part?.startsWith("**") && part.endsWith("**")) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    } else {
+      return <span key={index}>{part}</span>;
+    }
+  });
+};
 
   return (
     <div className="chatbot-messages" id="messages-container">

@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #3b82f6; /* Blue send button */
+  background-color: #8B9B7F; /* Blue send button */
   color: white;
   border: none;
   border-radius: 50%;
@@ -32,7 +32,8 @@
 }
 
 .chatbot-send-button.disabled {
-  background-color: #a6c8ff;
+  background-color: #8B9B7F;
+  opacity: 0.5;
   cursor: default;
 }
 

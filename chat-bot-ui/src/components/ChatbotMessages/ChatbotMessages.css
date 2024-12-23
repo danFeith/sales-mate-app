@@ -9,7 +9,7 @@
   line-height: 1.6; /* Improved line-height for readability */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  height: 100%;
+  height: calc(100% - 205px);
 }
 
 /* General Chatbot Message Styles */

@@ -7,7 +7,7 @@ application_url = "https://sales-mate-app.onrender.com"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
 dev_store_url = "shoesstore123235.myshopify.com"
 include_config_on_deploy = true
 
@@ -16,7 +16,9 @@ include_config_on_deploy = true
 scopes = "read_products"
 
 [auth]
-redirect_urls = [ "https://sales-mate-app.onrender.com/api/auth/callback" ]
+redirect_urls = [
+  "https://sales-mate-app.onrender.com/api/auth/callback"
+]
 
 [webhooks]
 api_version = "2024-10"

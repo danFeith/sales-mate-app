@@ -4,17 +4,17 @@ export const initialMessages: Message[] = [
   { type: "assistant", text: "How can we help you today? 👋" },
   {
     type: "user",
-    text: "Can you explain your shipping and return policy?",
+    text: "What are the benefits of wearing barefoot shoes?",
     isButton: true,
   },
   {
     type: "user",
-    text: "Help me find the perfect product for my needs",
+    text: "What if the size I choose doesn’t fit?",
     isButton: true,
   },
   {
     type: "user",
-    text: "What sets your brand apart from others?",
+    text: "What types of shoes does Rutsu Barefoot offer?",
     isButton: true,
   },
 ];

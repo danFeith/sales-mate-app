@@ -17,7 +17,7 @@ export async function initShop(shop, accessToken) {
         // Save shop data to MongoDB
         const savedShop = await Shop.findOneAndUpdate(
             { id: shopData.id },
-            {...shopData},
+            {...shopData, domain: shop},
             { upsert: true, new: true }
         );
 

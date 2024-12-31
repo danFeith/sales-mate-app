@@ -1,15 +1,14 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "3a7c9ef9793e7baf3033f119e6aca902"
-name = "Ecommind AI"
-handle = "ecommind-ai"
-application_url = "https://sales-mate-app.onrender.com"
+client_id = "034a667f0e8be13bab5101a5878bc966"
+name = "ecommind-app-dev"
+handle = "ecommind-app-dev"
+application_url = "https://shore-brave-sequences-dealing.trycloudflare.com"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = false
-dev_store_url = "shoesstore123235.myshopify.com"
-include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+dev_store_url = "new-snowboard-store.myshopify.com"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
@@ -17,15 +16,13 @@ scopes = "read_products"
 
 [auth]
 redirect_urls = [
-  "https://sales-mate-app.onrender.com/api/auth/callback"
+  "https://shore-brave-sequences-dealing.trycloudflare.com/auth/callback",
+  "https://shore-brave-sequences-dealing.trycloudflare.com/auth/shopify/callback",
+  "https://shore-brave-sequences-dealing.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2024-10"
-
-  [[webhooks.subscriptions]]
-  topics = [ "products/create", "products/delete", "products/update" ]
-  uri = "pubsub://salesmate-443311:PRODUCTS"
 
 [pos]
 embedded = false

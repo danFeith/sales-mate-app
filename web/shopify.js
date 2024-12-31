@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://dfeithlicher:VY1bQsbD0VAGpFeG@cluster0.hoa5l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-console.log("MONGO_URI", MONGO_URI)
+console.log("MONGO_URI ", MONGO_URI)
 
 
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.

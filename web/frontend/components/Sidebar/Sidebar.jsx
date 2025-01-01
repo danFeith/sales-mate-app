@@ -21,7 +21,7 @@ const Sidebar = () => {
           </li>
           <li className="menu-item">
             <div className="icon">📊</div>
-            <span>Insights</span>
+            <span>Dashboard</span>
           </li>
         </ul>
       </nav>

@@ -27,7 +27,7 @@ export async function initShop(shop, accessToken) {
         const bulkOps = products.map((product) => ({
             updateOne: {
                 filter: { id: product.id },
-                update: { ...product, shop_id: savedShop.id, shop_domain: savedShop.domain  }, 
+                update: { ...product, shop_id: savedShop.id, shop_domain: savedShop.domain, created_at: new Date()  }, 
                 upsert: true, // Insert if it doesn't exist
             },
         }));

@@ -77,7 +77,9 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 const startServer = async () => {
   await connectDB()
   await registerWebhooksForAllShops()
-  app.listen(PORT);
+  app.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`)
+  });
 }
 
 await startServer()

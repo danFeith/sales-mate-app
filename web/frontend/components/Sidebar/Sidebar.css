@@ -20,14 +20,13 @@
 .logo-icon {
   width: 40px;
   height: 40px;
-  background-color: #3366ff;
   border-radius: 50%;
   color: #ffffff;
   font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 12px;
 }
 
 .logo-text {
@@ -38,11 +37,13 @@
 }
 
 .menu-title {
-  color: #a0a3bd;
-  font-size: 0.85em;
-  font-weight: 600;
+  color: #475569;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   padding: 10px 20px;
-  text-transform: uppercase;
 }
 
 .menu ul {
@@ -52,25 +53,38 @@
 
 .menu-item {
   display: flex;
+  padding: 8px;
   align-items: center;
-  padding: 10px 20px;
+  gap: 16px;
+  align-self: stretch;
   cursor: pointer;
-  color: #555555;
-  font-weight: 600;
-  border-radius: 10px;
+  color: #020617;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 32px;
   margin: 5px 10px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  width: 208px;
 }
 
 .menu-item .icon {
-  margin-right: 10px;
   font-size: 1.2em;
+  padding: 0;
+  margin-bottom: -5px;
 }
 
 .menu-item:hover,
 .menu-item.active {
-  background-color: #3366ff;
-  color: #ffffff;
+  background-color: #2563EB;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .menu-item.active .icon,
